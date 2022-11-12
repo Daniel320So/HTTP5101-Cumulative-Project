@@ -40,8 +40,8 @@ namespace SchoolProject.Controllers
                 string teacherFname = ResultSet["teacherfname"].ToString();
                 string teacherLname = ResultSet["teacherlname"].ToString();
                 string employeeNumber = ResultSet["employeenumber"].ToString();
-                string hireDate = new DateTime(ResultSet["hireDate"]);
-                string salary = float.Parse(ResultSet["salary"]);
+                DateTime hireDate = new DateTime(long.Parse(ResultSet["hireDate"].ToString()));
+                float salary = float.Parse(ResultSet["salary"].ToString());
 
                 Teacher newTeacher = new Teacher(teacherId, teacherFname, teacherLname, employeeNumber, hireDate, salary);
 
