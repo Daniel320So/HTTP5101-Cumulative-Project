@@ -6,6 +6,7 @@ using System.Net.Http;
 using System.Web.Http;
 using SchoolProject.Models;
 using MySql.Data.MySqlClient;
+using System.Diagnostics;
 
 namespace SchoolProject.Controllers
 {
@@ -15,6 +16,7 @@ namespace SchoolProject.Controllers
         private SchoolDbContext School = new SchoolDbContext();
 
         //This Controller Will access the teachers table.
+
         /// <summary>
         /// Returns a list of teachers in the system
         /// </summary>
@@ -36,15 +38,7 @@ namespace SchoolProject.Controllers
             while (ResultSet.Read())
             {
                 //Access Column information by the DB column name as an index
-                int teacherId = (int)ResultSet["teacherid"];
-                string teacherFname = ResultSet["teacherfname"].ToString();
-                string teacherLname = ResultSet["teacherlname"].ToString();
-                string employeeNumber = ResultSet["employeenumber"].ToString();
-                DateTime hireDate = new DateTime(long.Parse(ResultSet["hireDate"].ToString()));
-                float salary = float.Parse(ResultSet["salary"].ToString());
-
-                Teacher newTeacher = new Teacher(teacherId, teacherFname, teacherLname, employeeNumber, hireDate, salary);
-
+                Teacher newTeacher = ConvertDataToTeaherObject(ResultSet);
 
                 //Add the Author Name to the List
                 teachers.Add(newTeacher);
@@ -53,6 +47,53 @@ namespace SchoolProject.Controllers
             Conn.Close();
 
             return teachers;
+        }
+
+        /// <summary>
+        /// Finds an teacher in the system given an ID
+        /// </summary>
+        /// <param name="id">The teacher primary key</param>
+        /// <returns>An teacher object</returns>
+        [HttpGet]
+        public Teacher FindTeacher(int id)
+        {
+            MySqlConnection Conn = School.AccessDatabase();
+            Conn.Open();
+            MySqlCommand cmd = Conn.CreateCommand();
+            cmd.CommandText = "Select * from Teachers where teacherId = " + id;
+            MySqlDataReader ResultSet = cmd.ExecuteReader();
+            Teacher newTeacher = new Teacher();
+
+            while (ResultSet.Read())
+            {
+                //Access Column information by the DB column name as an index
+                newTeacher = ConvertDataToTeaherObject(ResultSet);
+            }
+
+            Conn.Close();
+
+            return newTeacher;
+        }
+
+        /// <summary>
+        /// Return a Teacher object from the result in the ResulSet
+        /// </summary> 
+        /// <param name="result">The result from the database</param>
+        /// <returns>
+        /// A Teacher Object
+        /// </returns>
+        /// 
+
+        private Teacher ConvertDataToTeaherObject(MySqlDataReader result)
+        {
+            int teacherId = (int)result["teacherid"];
+            string teacherFname = result["teacherfname"].ToString();
+            string teacherLname = result["teacherlname"].ToString();
+            string employeeNumber = result["employeenumber"].ToString();
+            //DateTime hireDate = new DateTime(long.Parse(ResultSet["hireDate"].ToString()));
+            string hireDate = result["hireDate"].ToString();
+            float salary = float.Parse(result["salary"].ToString());
+            return new Teacher(teacherId, teacherFname, teacherLname, employeeNumber, hireDate, salary);
         }
     }
 }

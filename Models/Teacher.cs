@@ -12,11 +12,11 @@ namespace SchoolProject.Models
         public string teacherFname;
         public string teacherLname;
         public string employeeNumber;
-        public DateTime hireDate;
-        public double salary;
+        public string hireDate;
+        public float salary;
 
         //Constructor
-        public Teacher(int _teacherId, string _teacherFname, string _teacherLname, string _employeeNumber, DateTime _hireDate, double _salary)
+        public Teacher(int _teacherId = -1, string _teacherFname = null, string _teacherLname = null, string _employeeNumber = null, string _hireDate = null, float _salary = 0)
         {
             teacherId = _teacherId;
             teacherFname = _teacherFname;

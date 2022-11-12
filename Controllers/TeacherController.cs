@@ -22,5 +22,12 @@ namespace SchoolProject.Controllers
             IEnumerable<Teacher> teachers = controller.ListTeacher();
             return View(teachers);
         }
+
+        public ActionResult Show(int id)
+        {
+            TeacherDataController controller = new TeacherDataController();
+            Teacher teacher = controller.FindTeacher(1);
+            return View(teacher);
+        }
     }
 }
