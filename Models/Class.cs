@@ -14,6 +14,7 @@ namespace SchoolProject.Models
         public DateTime startDate;
         public DateTime finishDate;
         public string className;
+        public Teacher teacher;
 
         //Constructor
         public Class(int _classId = -1, string _classCode = null, int _teacherId = -1, DateTime _startDate = new DateTime(), DateTime _finishDate = new DateTime(), string _className = null)

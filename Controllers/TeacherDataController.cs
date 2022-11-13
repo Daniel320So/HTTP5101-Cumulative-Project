@@ -39,7 +39,7 @@ namespace SchoolProject.Controllers
             while (ResultSet.Read())
             {
                 //Access Column information by the DB column name as an index
-                Teacher newTeacher = ConvertDataToTeaherObject(ResultSet);
+                Teacher newTeacher = ConvertDataToTeacherObject(ResultSet);
 
                 //Add the Author Name to the List
                 teachers.Add(newTeacher);
@@ -68,7 +68,12 @@ namespace SchoolProject.Controllers
             while (ResultSet.Read())
             {
                 //Access Column information by the DB column name as an index
-                newTeacher = ConvertDataToTeaherObject(ResultSet);
+                newTeacher = ConvertDataToTeacherObject(ResultSet);
+
+                //Add classes data to the teacher
+                ClassDataController controller = new ClassDataController();
+                List<Class> classes = controller.FindClassByTeacherId(newTeacher.teacherId);
+                newTeacher.classes = classes;
             }
 
             Conn.Close();
@@ -85,7 +90,7 @@ namespace SchoolProject.Controllers
         /// </returns>
         /// 
 
-        private Teacher ConvertDataToTeaherObject(MySqlDataReader result)
+        public Teacher ConvertDataToTeacherObject(MySqlDataReader result)
         {
             int teacherId = (int)result["teacherid"];
             string teacherFname = result["teacherfname"].ToString();
@@ -94,10 +99,6 @@ namespace SchoolProject.Controllers
             DateTime hireDate = DateTime.Parse(result["hireDate"].ToString());
             float salary = float.Parse(result["salary"].ToString());
             Teacher newTeacher = new Teacher(teacherId, teacherFname, teacherLname, employeeNumber, hireDate, salary);
-
-            ClassDataController controller = new ClassDataController();
-            List<Class> classes = controller.FindClassByTeacherId(newTeacher.teacherId);
-            newTeacher.classes = classes;
 
             return newTeacher;
         }

@@ -38,7 +38,7 @@ namespace SchoolProject.Controllers
             while (ResultSet.Read())
             {
                 //Access Column information by the DB column name as an index
-                Class newClass = ConvertDataToTeaherObject(ResultSet);
+                Class newClass = ConvertDataToClassObject(ResultSet);
 
                 //Add the Class Name to the List
                 classes.Add(newClass);
@@ -60,14 +60,16 @@ namespace SchoolProject.Controllers
             MySqlConnection Conn = School.AccessDatabase();
             Conn.Open();
             MySqlCommand cmd = Conn.CreateCommand();
-            cmd.CommandText = "Select * from Classes where classId = " + id;
+            cmd.CommandText = "Select * from Classes c join Teachers t on c.teacherId = t.teacherId where c.classId = " + id;
             MySqlDataReader ResultSet = cmd.ExecuteReader();
             Class newClass = new Class();
 
             while (ResultSet.Read())
             {
                 //Access Column information by the DB column name as an index
-                newClass = ConvertDataToTeaherObject(ResultSet);
+                newClass = ConvertDataToClassObject(ResultSet);
+                TeacherDataController controller = new TeacherDataController();
+                newClass.teacher = controller.ConvertDataToTeacherObject(ResultSet);
             }
 
             Conn.Close();
@@ -93,7 +95,7 @@ namespace SchoolProject.Controllers
             while (ResultSet.Read())
             {
                 //Access Column information by the DB column name as an index
-                Class newClass = ConvertDataToTeaherObject(ResultSet);
+                Class newClass = ConvertDataToClassObject(ResultSet);
                 classes.Add(newClass);
             }
 
@@ -111,7 +113,7 @@ namespace SchoolProject.Controllers
         /// </returns>
         /// 
 
-        private Class ConvertDataToTeaherObject(MySqlDataReader result)
+        public Class ConvertDataToClassObject(MySqlDataReader result)
         {
             int classId = (int)result["classid"];
             string classCode = result["classcode"].ToString();
