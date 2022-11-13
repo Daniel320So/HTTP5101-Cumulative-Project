@@ -115,7 +115,7 @@ namespace SchoolProject.Controllers
 
         public Class ConvertDataToClassObject(MySqlDataReader result)
         {
-            int classId = (int)result["classid"];
+            int classId = int.Parse(result["classid"].ToString());
             string classCode = result["classcode"].ToString();
             int teacherId = int.Parse(result["teacherid"].ToString());
             DateTime startDate = DateTime.Parse(result["startdate"].ToString());

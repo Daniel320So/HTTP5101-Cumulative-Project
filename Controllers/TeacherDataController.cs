@@ -92,7 +92,7 @@ namespace SchoolProject.Controllers
 
         public Teacher ConvertDataToTeacherObject(MySqlDataReader result)
         {
-            int teacherId = (int)result["teacherid"];
+            int teacherId = int.Parse(result["teacherId"].ToString());
             string teacherFname = result["teacherfname"].ToString();
             string teacherLname = result["teacherlname"].ToString();
             string employeeNumber = result["employeenumber"].ToString();
