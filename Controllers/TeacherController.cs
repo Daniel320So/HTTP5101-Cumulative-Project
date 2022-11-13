@@ -23,10 +23,11 @@ namespace SchoolProject.Controllers
             return View(teachers);
         }
 
+        //GET : /Teacher/Show/${id}
         public ActionResult Show(int id)
         {
             TeacherDataController controller = new TeacherDataController();
-            Teacher teacher = controller.FindTeacher(1);
+            Teacher teacher = controller.FindTeacher(id);
             return View(teacher);
         }
     }

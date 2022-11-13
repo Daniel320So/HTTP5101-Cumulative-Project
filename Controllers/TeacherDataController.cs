@@ -7,6 +7,7 @@ using System.Web.Http;
 using SchoolProject.Models;
 using MySql.Data.MySqlClient;
 using System.Diagnostics;
+using System.Globalization;
 
 namespace SchoolProject.Controllers
 {
@@ -50,10 +51,10 @@ namespace SchoolProject.Controllers
         }
 
         /// <summary>
-        /// Finds an teacher in the system given an ID
+        /// Finds a teacher in the system given an ID
         /// </summary>
         /// <param name="id">The teacher primary key</param>
-        /// <returns>An teacher object</returns>
+        /// <returns>A teacher object</returns>
         [HttpGet]
         public Teacher FindTeacher(int id)
         {
@@ -90,8 +91,7 @@ namespace SchoolProject.Controllers
             string teacherFname = result["teacherfname"].ToString();
             string teacherLname = result["teacherlname"].ToString();
             string employeeNumber = result["employeenumber"].ToString();
-            //DateTime hireDate = new DateTime(long.Parse(ResultSet["hireDate"].ToString()));
-            string hireDate = result["hireDate"].ToString();
+            DateTime hireDate = DateTime.Parse(result["hireDate"].ToString());
             float salary = float.Parse(result["salary"].ToString());
             return new Teacher(teacherId, teacherFname, teacherLname, employeeNumber, hireDate, salary);
         }
