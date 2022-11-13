@@ -93,7 +93,13 @@ namespace SchoolProject.Controllers
             string employeeNumber = result["employeenumber"].ToString();
             DateTime hireDate = DateTime.Parse(result["hireDate"].ToString());
             float salary = float.Parse(result["salary"].ToString());
-            return new Teacher(teacherId, teacherFname, teacherLname, employeeNumber, hireDate, salary);
+            Teacher newTeacher = new Teacher(teacherId, teacherFname, teacherLname, employeeNumber, hireDate, salary);
+
+            ClassDataController controller = new ClassDataController();
+            List<Class> classes = controller.FindClassByTeacherId(newTeacher.teacherId);
+            newTeacher.classes = classes;
+
+            return newTeacher;
         }
     }
 }

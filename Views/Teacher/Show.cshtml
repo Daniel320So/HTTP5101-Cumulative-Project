@@ -10,4 +10,16 @@
     <p> Employee Number: @Model.employeeNumber</p>
     <p> Hire Date: @Model.hireDate</p>
     <p> Salary: @Model.salary</p>
+
+    <div id="containerlist">
+        <h3>List of Courses</h3>
+        @foreach (var classes in @Model.classes)
+        {
+            <div class="listitem row">
+                <div class="col-md-12"><a href="/Class/Show/@classes.classId">@classes.className</a></div>
+            </div>
+        }
+    </div>
 </div>
+
+

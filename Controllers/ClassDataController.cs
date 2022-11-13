@@ -40,7 +40,7 @@ namespace SchoolProject.Controllers
                 //Access Column information by the DB column name as an index
                 Class newClass = ConvertDataToTeaherObject(ResultSet);
 
-                //Add the Author Name to the List
+                //Add the Class Name to the List
                 classes.Add(newClass);
             }
 
@@ -73,6 +73,33 @@ namespace SchoolProject.Controllers
             Conn.Close();
 
             return newClass;
+        }
+
+        /// <summary>
+        /// Finds a list of class in the system given an teacherId
+        /// </summary>
+        /// <param name="id">The teacherId foreign key</param>
+        /// <returns>A list of class object</returns>
+        [HttpGet]
+        public List<Class> FindClassByTeacherId(int id)
+        { 
+            MySqlConnection Conn = School.AccessDatabase();
+            Conn.Open();
+            MySqlCommand cmd = Conn.CreateCommand();
+            cmd.CommandText = "Select * from Classes where teacherId = " + id;
+            MySqlDataReader ResultSet = cmd.ExecuteReader();
+            List<Class> classes = new List<Class> { };
+
+            while (ResultSet.Read())
+            {
+                //Access Column information by the DB column name as an index
+                Class newClass = ConvertDataToTeaherObject(ResultSet);
+                classes.Add(newClass);
+            }
+
+            Conn.Close();
+
+            return classes;
         }
 
         /// <summary>
