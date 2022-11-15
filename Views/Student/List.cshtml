@@ -1,0 +1,23 @@
+﻿@model IEnumerable<SchoolProject.Models.Student>
+@{
+    ViewBag.Title = "List";
+}
+
+<h2>List</h2>
+<p>This page should be showing information about all studentes</p>
+
+<form action="/Student/List">
+    <label for="search">Search:</label>
+    <input type="text" id="searchKey" name="searchKey">
+    <input type="submit" value="Search">
+</form>
+
+<div id="containerlist">
+    <h2>List of Studentes</h2>
+    @foreach (var studentObj in Model)
+    {
+        <div student="listitem row">
+            <div student="col-md-12"><a href="/Student/Show/@studentObj.studentId">@studentObj.studentFname @studentObj.studentLname</a></div>
+        </div>
+    }
+</div>
