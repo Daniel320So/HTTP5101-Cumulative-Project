@@ -80,6 +80,9 @@ namespace SchoolProject.Controllers
                 newStudent = ConvertDataToStudentObject(ResultSet);
 
                 //Add classes data to the student
+                ClassDataController classController = new ClassDataController();
+                newStudent.classes = classController.FindClassesBysStudentId(id);
+                Debug.WriteLine(newStudent);
             }
 
             Conn.Close();
@@ -121,7 +124,6 @@ namespace SchoolProject.Controllers
             {
                 //Access Column information by the DB column name as an index
                 Student newStudent = ConvertDataToStudentObject(ResultSet);
-
                 students.Add(newStudent);
             }
 

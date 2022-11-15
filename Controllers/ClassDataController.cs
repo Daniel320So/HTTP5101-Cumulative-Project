@@ -124,6 +124,39 @@ namespace SchoolProject.Controllers
         }
 
         /// <summary>
+        /// Finds a list of class in the system given an studentId
+        /// </summary>
+        /// <param name="id">The studentId foreign key</param>
+        /// <returns>A list of class object</returns>
+        [HttpGet]
+        public List<Class> FindClassesBysStudentId(int id)
+        {
+            MySqlConnection Conn = School.AccessDatabase();
+            Conn.Open();
+            MySqlCommand cmd = Conn.CreateCommand();
+
+            string query = "Select * from Classes c join studentsxclasses sxc on c.classId = sxc.classId where studentId = @id";
+            cmd.CommandText = query;
+            cmd.Parameters.AddWithValue("@id", id);
+            cmd.Prepare();
+
+            MySqlDataReader ResultSet = cmd.ExecuteReader();
+            List<Class> classes = new List<Class> { };
+
+            while (ResultSet.Read())
+            {
+                //Access Column information by the DB column name as an index
+                Class newClass = ConvertDataToClassObject(ResultSet);
+                classes.Add(newClass);
+            }
+
+            Conn.Close();
+
+            return classes;
+        }
+        
+
+        /// <summary>
         /// Finds a list of studentId in the system given an classId
         /// </summary>
         /// <param name="id">The classId</param>

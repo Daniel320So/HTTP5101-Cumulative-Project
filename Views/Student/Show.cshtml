@@ -10,4 +10,13 @@
     <p> Student Number: @Model.studentNumber</p>
     <p> Enroll Date: @Model.enrollDate</p>
 
+    <div id="containerlist">
+        <h3>List of Courses</h3>
+        @foreach (var classObj in @Model.classes)
+        {
+            <div class="listitem row">
+                <div class="col-md-12"><a href="/Class/Show/@classObj.classId">@classObj.className</a></div>
+            </div>
+        }
+    </div>
 </div>
