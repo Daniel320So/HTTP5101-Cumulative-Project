@@ -11,4 +11,14 @@
     <p> Start Date: @Model.startDate</p>
     <p> Finish Date: @Model.finishDate</p>
     <p> Teacher: <a href="/Teacher/Show/@Model.teacher.teacherId"> @Model.teacher.teacherFname @Model.teacher.teacherLname</a> </p>
+
+    <div id="containerlist">
+        <h3>List of Student</h3>
+        @foreach (var student in @Model.students)
+        {
+            <div class="listitem row">
+                <div class="col-md-12"><a href="/Student/Show/@student.studentId">@student.studentFname, @student.studentLname</a></div>
+            </div>
+        }
+    </div>
 </div>

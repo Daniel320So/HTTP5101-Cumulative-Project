@@ -78,8 +78,12 @@ namespace SchoolProject.Controllers
             {
                 //Access Column information by the DB column name as an index
                 newClass = ConvertDataToClassObject(ResultSet);
-                TeacherDataController controller = new TeacherDataController();
-                newClass.teacher = controller.FindTeacher(int.Parse(ResultSet["teacherid"].ToString()));
+                TeacherDataController teacherController = new TeacherDataController();
+                newClass.teacher = teacherController.FindTeacher(int.Parse(ResultSet["teacherid"].ToString()));
+
+                List<int> studentIds = FindStudentEnrolledInClass(id);
+                StudentDataController studentController = new StudentDataController();
+                newClass.students = studentController.FindStudents(studentIds);
             }
 
             Conn.Close();
@@ -117,6 +121,37 @@ namespace SchoolProject.Controllers
             Conn.Close();
 
             return classes;
+        }
+
+        /// <summary>
+        /// Finds a list of studentId in the system given an classId
+        /// </summary>
+        /// <param name="id">The classId</param>
+        /// <returns>A list of studentId</returns>
+        [HttpGet]
+        public List<int> FindStudentEnrolledInClass(int id)
+        {
+            MySqlConnection Conn = School.AccessDatabase();
+            Conn.Open();
+            MySqlCommand cmd = Conn.CreateCommand();
+
+            string query = "Select * from studentsxclasses where classId = @id";
+            cmd.CommandText = query;
+            cmd.Parameters.AddWithValue("@id", id);
+            cmd.Prepare();
+
+            MySqlDataReader ResultSet = cmd.ExecuteReader();
+            List<int> studentIds = new List<int> { };
+
+            while (ResultSet.Read())
+            {
+                //Access Column information by the DB column name as an index
+                studentIds.Add(int.Parse(ResultSet["studentId"].ToString()));
+            }
+
+            Conn.Close();
+
+            return studentIds;
         }
 
         /// <summary>

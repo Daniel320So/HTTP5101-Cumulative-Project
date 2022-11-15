@@ -14,6 +14,7 @@ namespace SchoolProject.Models
         public string studentLname;
         public string studentNumber;
         public DateTime enrollDate;
+        public Class classes;
 
         //Constructor
         public Student(int _studentId = -1, string _studentFname = null, string _studentLname = null, string _studentNumber = null, DateTime _enrollDate = new DateTime())
