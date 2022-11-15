@@ -6,6 +6,12 @@
 <h2>List</h2>
 <p>This page should be showing information about all teachers</p>
 
+<form action="/Teacher/List">
+    <label for="search">Search:</label>
+    <input type="text" id="searchKey" name="searchKey">
+    <input type="submit" value="Search">
+</form>
+
 <div id="containerlist">
     <h2>List of Teachers</h2>
     @foreach (var teacher in Model)

@@ -26,12 +26,17 @@ namespace SchoolProject.Controllers
         /// </returns>
 
         [HttpGet]
-        public IEnumerable<Class> ListClass()
+        public IEnumerable<Class> ListClass(string searchKey)
         {
             MySqlConnection Conn = School.AccessDatabase();
             Conn.Open();
             MySqlCommand cmd = Conn.CreateCommand();
-            cmd.CommandText = "Select * from Classes";
+
+            string query = "Select * from Classes where classname like @key";
+            cmd.CommandText = query;
+            cmd.Parameters.AddWithValue("@key", "%" + searchKey + "%");
+            cmd.Prepare();
+
             MySqlDataReader ResultSet = cmd.ExecuteReader();
             List<Class> classes = new List<Class> { };
 
@@ -60,7 +65,12 @@ namespace SchoolProject.Controllers
             MySqlConnection Conn = School.AccessDatabase();
             Conn.Open();
             MySqlCommand cmd = Conn.CreateCommand();
-            cmd.CommandText = "Select * from Classes c join Teachers t on c.teacherId = t.teacherId where c.classId = " + id;
+
+            string query = "Select * from Classes where classId = @id";
+            cmd.CommandText = query;
+            cmd.Parameters.AddWithValue("@id", id);
+            cmd.Prepare();
+
             MySqlDataReader ResultSet = cmd.ExecuteReader();
             Class newClass = new Class();
 
@@ -69,7 +79,7 @@ namespace SchoolProject.Controllers
                 //Access Column information by the DB column name as an index
                 newClass = ConvertDataToClassObject(ResultSet);
                 TeacherDataController controller = new TeacherDataController();
-                newClass.teacher = controller.ConvertDataToTeacherObject(ResultSet);
+                newClass.teacher = controller.FindTeacher(int.Parse(ResultSet["teacherid"].ToString()));
             }
 
             Conn.Close();
@@ -88,7 +98,12 @@ namespace SchoolProject.Controllers
             MySqlConnection Conn = School.AccessDatabase();
             Conn.Open();
             MySqlCommand cmd = Conn.CreateCommand();
-            cmd.CommandText = "Select * from Classes where teacherId = " + id;
+
+            string query = "Select * from Classes where teacherId = @id";
+            cmd.CommandText = query;
+            cmd.Parameters.AddWithValue("@id", id);
+            cmd.Prepare();
+
             MySqlDataReader ResultSet = cmd.ExecuteReader();
             List<Class> classes = new List<Class> { };
 
