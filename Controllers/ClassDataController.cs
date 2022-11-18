@@ -80,6 +80,7 @@ namespace SchoolProject.Controllers
                 List<int> studentIds = FindStudentEnrolledInClass(id);
                 StudentDataController studentController = new StudentDataController();
                 newClass.students = studentController.FindStudents(studentIds);
+                newClass.studentNumber = newClass.students.Count;
             }
 
             Conn.Close();
