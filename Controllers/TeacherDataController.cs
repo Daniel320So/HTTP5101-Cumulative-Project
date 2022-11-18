@@ -27,14 +27,16 @@ namespace SchoolProject.Controllers
         /// </returns>
 
         [HttpGet]
-        public IEnumerable<Teacher> ListTeacher(string searchKey)
+        public IEnumerable<Teacher> ListTeacher(string searchKey, float minSalary, float maxSalary)
         {
             MySqlConnection Conn = School.AccessDatabase();
             Conn.Open();
             MySqlCommand cmd = Conn.CreateCommand();
-            string query = "Select * from Teachers where teacherfname like @key or teacherlname like @key";
+            string query = "Select * from Teachers where (teacherfname like @key or teacherlname like @key) AND (salary Between @minSalary AND @maxSalary)";
             cmd.CommandText = query;
             cmd.Parameters.AddWithValue("@key", "%" + searchKey + "%");
+            cmd.Parameters.AddWithValue("@minSalary", minSalary);
+            cmd.Parameters.AddWithValue("@maxSalary", maxSalary);
             cmd.Prepare();
 
             MySqlDataReader ResultSet = cmd.ExecuteReader();
