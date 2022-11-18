@@ -18,13 +18,10 @@ namespace SchoolProject.Controllers
 
         //This Controller Will access the students table.
 
-        /// <summary>
-        /// Returns a list of students in the system
-        /// </summary>
-        /// <example>GET api/StudentData/ListStudent</example>
-        /// <returns>
-        /// A list of students
-        /// </returns>
+        /// <summary>Returns a list of students in the system filtered by name</summary>
+        /// <param name="searchKey">The search key of student name</param>
+        /// <returns>A list of students</returns>
+        /// <example>GET api/StudentData/ListStudent/${searchKey}</example>
 
         [HttpGet]
         public IEnumerable<Student> ListStudent(string searchKey)
@@ -54,11 +51,10 @@ namespace SchoolProject.Controllers
             return students;
         }
 
-        /// <summary>
-        /// Finds a student in the system given an ID
-        /// </summary>
+        /// <summary>Finds a student in the system given an ID</summary>
         /// <param name="id">The student primary key</param>
         /// <returns>A student object</returns>
+        /// <example>GET api/StudentData/FindStudent/${id}</example>
         [HttpGet]
         public Student FindStudent(int id)
         {
@@ -90,11 +86,10 @@ namespace SchoolProject.Controllers
             return newStudent;
         }
 
-        /// <summary>
-        /// Finds a student in the system given an ID
-        /// </summary>
-        /// <param name="id">The student primary key</param>
-        /// <returns>A student object</returns>
+        /// <summary>Find a list of student in the system given a list of ids</summary>
+        /// <param name="ids">A list of student primary key</param>
+        /// <returns>A list of student object</returns>
+        /// <example>GET api/StudentData/FindStudents/${ids}</example>
         [HttpGet]
         public List<Student> FindStudents(List<int> ids)
         {
@@ -132,14 +127,10 @@ namespace SchoolProject.Controllers
             return students;
         }
 
-        /// <summary>
-        /// Return a Student object from the result in the ResulSet
-        /// </summary> 
+        /// <summary>Return a Student object from the result in the ResulSet</summary> 
         /// <param name="result">The result from the database</param>
-        /// <returns>
-        /// A Student Object
-        /// </returns>
-        /// 
+        /// <returns>A Student Object</returns>
+    
 
         public Student ConvertDataToStudentObject(MySqlDataReader result)
         {

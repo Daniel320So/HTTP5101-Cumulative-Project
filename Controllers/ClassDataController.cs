@@ -17,13 +17,10 @@ namespace SchoolProject.Controllers
 
         //This Controller Will access the classes table.
 
-        /// <summary>
-        /// Returns a list of classes in the system
-        /// </summary>
-        /// <example>GET api/ClassData/ListClass</example>
-        /// <returns>
-        /// A list of classes
-        /// </returns>
+        /// <summary> Returns a list of classes in the system by filtering the Class Name </summary>
+        /// <param name="searchKey"> search key for class name</param>
+        /// <returns> A list of classes </returns>
+        /// <example>GET api/ClassData/ListClass/${searchKey}</example>
 
         [HttpGet]
         public IEnumerable<Class> ListClass(string searchKey)
@@ -54,11 +51,10 @@ namespace SchoolProject.Controllers
             return classes;
         }
 
-        /// <summary>
-        /// Finds a class in the system given an ID
-        /// </summary>
+        /// <summary> Finds a class in the system given an ID</summary>
         /// <param name="id">The class primary key</param>
         /// <returns>A class object</returns>
+        /// <example>GET api/ClassData/FindClass/${id}</example>
         [HttpGet]
         public Class FindClass(int id)
         {
@@ -91,11 +87,10 @@ namespace SchoolProject.Controllers
             return newClass;
         }
 
-        /// <summary>
-        /// Finds a list of class in the system given an teacherId
-        /// </summary>
+        /// <summary> Finds a list of class in the system given an teacherId </summary>
         /// <param name="id">The teacherId foreign key</param>
         /// <returns>A list of class object</returns>
+        /// <example>GET api/ClassData/FindClassByTeacherId/${id}</example>
         [HttpGet]
         public List<Class> FindClassByTeacherId(int id)
         { 
@@ -123,11 +118,11 @@ namespace SchoolProject.Controllers
             return classes;
         }
 
-        /// <summary>
-        /// Finds a list of class in the system given an studentId
-        /// </summary>
+        /// <summary> Finds a list of class in the system given an studentId </summary>
         /// <param name="id">The studentId foreign key</param>
         /// <returns>A list of class object</returns>
+        /// <example>GET api/ClassData/FindClassesBysStudentId/${id}</example>
+
         [HttpGet]
         public List<Class> FindClassesBysStudentId(int id)
         {
@@ -154,13 +149,12 @@ namespace SchoolProject.Controllers
 
             return classes;
         }
-        
 
-        /// <summary>
-        /// Finds a list of studentId in the system given an classId
-        /// </summary>
+
+        /// <summary> Finds a list of studentId in the system given an classId </summary>
         /// <param name="id">The classId</param>
         /// <returns>A list of studentId</returns>
+        /// <example>GET api/ClassData/FindStudentEnrolledInClass/${id}</example>
         [HttpGet]
         public List<int> FindStudentEnrolledInClass(int id)
         {
@@ -187,14 +181,9 @@ namespace SchoolProject.Controllers
             return studentIds;
         }
 
-        /// <summary>
-        /// Return a Class object from the result in the ResulSet
-        /// </summary> 
+        /// <summary>Return a Class object from the result in the ResulSet</summary> 
         /// <param name="result">The result from the database</param>
-        /// <returns>
-        /// A Class Object
-        /// </returns>
-        /// 
+        /// <returns>A Class Object</returns>
 
         public Class ConvertDataToClassObject(MySqlDataReader result)
         {

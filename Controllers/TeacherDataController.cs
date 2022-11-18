@@ -18,13 +18,12 @@ namespace SchoolProject.Controllers
 
         //This Controller Will access the teachers table.
 
-        /// <summary>
-        /// Returns a list of teachers in the system
-        /// </summary>
-        /// <example>GET api/TeacherData/ListTeacher</example>
-        /// <returns>
-        /// A list of teachers
-        /// </returns>
+        /// <summary>Returns a list of teachers in the system filtered by name and salary</summary>
+        /// <param name="searchKey">The searchKey of student name</param>
+        /// <param name="minSalary">The lower bound of the salary range</param>
+        /// <param name="maxSalary">The upper bound of the salary range</param>
+        /// <returns>A list of teachers</returns>
+        /// <example>GET api/TeacherData/ListTeacher/${searchKey}/${minSalary}/${maxSalary}</example>
 
         [HttpGet]
         public IEnumerable<Teacher> ListTeacher(string searchKey, float minSalary, float maxSalary)
@@ -47,7 +46,7 @@ namespace SchoolProject.Controllers
                 //Access Column information by the DB column name as an index
                 Teacher newTeacher = ConvertDataToTeacherObject(ResultSet);
 
-                //Add the Author Name to the List
+                //Add the teacher Name to the List
                 teachers.Add(newTeacher);
             }
 
@@ -56,11 +55,10 @@ namespace SchoolProject.Controllers
             return teachers;
         }
 
-        /// <summary>
-        /// Finds a teacher in the system given an ID
-        /// </summary>
+        /// <summary>Finds a teacher in the system given an ID</summary>
         /// <param name="id">The teacher primary key</param>
         /// <returns>A teacher object</returns>
+        /// <example>GET api/TeacherData/FindTeacher/${id}</example>
         [HttpGet]
         public Teacher FindTeacher(int id)
         {
@@ -92,14 +90,9 @@ namespace SchoolProject.Controllers
             return newTeacher;
         }
 
-        /// <summary>
-        /// Return a Teacher object from the result in the ResulSet
-        /// </summary> 
-        /// <param name="result">The result from the database</param>
-        /// <returns>
-        /// A Teacher Object
-        /// </returns>
-        /// 
+        /// <summary>Return a Teacher object from the result in the ResulSet</summary> 
+        /// <param name="result">The result from the database</param><returns>
+        /// A Teacher Object</returns>
 
         public Teacher ConvertDataToTeacherObject(MySqlDataReader result)
         {
