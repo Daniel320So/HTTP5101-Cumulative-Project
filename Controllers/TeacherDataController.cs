@@ -106,5 +106,55 @@ namespace SchoolProject.Controllers
 
             return newTeacher;
         }
+
+        /// <summary>
+        ///     Delete a teacher in the db based on the teacher id
+        /// </summary>
+        /// <param name="id"></param>
+        /// <example> POST : /api/AuthorData/DeleteTeacher/3 </example>
+
+        [HttpPost]
+        public void DeleteTeacher(int id)
+        {
+            MySqlConnection Conn = School.AccessDatabase();
+            Conn.Open();
+            MySqlCommand cmd = Conn.CreateCommand();
+
+            string query = "Delete from Teachers where teacherId = @id";
+            cmd.CommandText = query;
+            cmd.Parameters.AddWithValue("@id", id);
+            cmd.Prepare();
+
+            cmd.ExecuteNonQuery();
+
+            Conn.Close();
+        }
+
+        /// <summary>
+        ///     Delete a teacher in the db based on the teacher id
+        /// </summary>
+        /// <param name="id"></param>
+        /// <example> POST : /api/AuthorData/DeleteTeacher/3 </example>
+
+        [HttpPost]
+        public void AddTeacher( [FromBody]Teacher newTeacher)
+        {
+            MySqlConnection Conn = School.AccessDatabase();
+            Conn.Open();
+            MySqlCommand cmd = Conn.CreateCommand();
+
+            string query = "Insert into teachers (teacherfname, teacherlname, employeenumber, hiredate, salary) values (@teacherFname, @teacherLname, @employeeNumber, @hireDate, @salary)";
+            cmd.CommandText = query;
+            cmd.Parameters.AddWithValue("@teacherFname", newTeacher.teacherFname);
+            cmd.Parameters.AddWithValue("@teacherLname", newTeacher.teacherLname);
+            cmd.Parameters.AddWithValue("@employeeNumber", newTeacher.employeeNumber);
+            cmd.Parameters.AddWithValue("@hireDate", newTeacher.hireDate);
+            cmd.Parameters.AddWithValue("@salary", newTeacher.salary);
+            cmd.Prepare();
+
+            cmd.ExecuteNonQuery();
+
+            Conn.Close();
+        }
     }
 }

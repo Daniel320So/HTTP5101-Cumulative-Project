@@ -31,5 +31,38 @@ namespace SchoolProject.Controllers
             Teacher teacher = controller.FindTeacher(id);
             return View(teacher);
         }
+
+        //GET : /Teacher/DeleteConfirm/${id}
+        public ActionResult DeleteConfirm(int id)
+        {
+            TeacherDataController controller = new TeacherDataController();
+            Teacher teacher = controller.FindTeacher(id);
+            return View(teacher);
+        }
+
+        //POST : /Teacher/Delete/{id}
+        public ActionResult Delete(int id)
+        {
+            TeacherDataController controller = new TeacherDataController();
+            controller.DeleteTeacher(id);
+            return RedirectToAction("List");
+        }
+
+        //GET : /Teacher/New
+        public ActionResult New()
+        {
+            return View();
+        }
+
+        //POST : /Teacher/Create
+        public ActionResult Create(string teacherLname, string teacherFname, string employeeNumber, string salary)
+        {
+            DateTime hireDate = DateTime.Now;
+            float _salary = float.Parse(salary);
+            TeacherDataController controller = new TeacherDataController();
+            Teacher teacher = new Teacher(-1, teacherLname, teacherFname, employeeNumber, hireDate, _salary);
+            controller.AddTeacher(teacher);
+            return RedirectToAction("List");
+        }
     }
 }
