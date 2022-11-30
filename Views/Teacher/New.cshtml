@@ -1,6 +1,8 @@
 ﻿
 @{
     ViewBag.Title = "New";
+    <script src="~/Scripts/jquery-3.4.1.min.js"></script>
+    <script src="~/Scripts/newTeacher.js"></script>
 }
 
 <nav>
@@ -12,21 +14,21 @@
 <form method="POST" action="/Teacher/Create">
     <div>
         <label for="teacherFname">First Name</label>
-        <input type="text" name="teacherFname" />
+        <input id="teacherFname" type="text" name="teacherFname" placeholder="John" />
     </div>
     <div>
         <label for="teacherLname">Last Name</label>
-        <input type="text" name="teacherLname" />
+        <input id="teacherLname" type="text" name="teacherLname" placeholder="Doe"/>
     </div>
     <div>
         <label for="employeeNumber">Employee Number</label>
-        <input type="text" name="employeeNumber" />
+        <input id="employeeNumber" type="text" name="employeeNumber" placeholder="T123"/>
     </div>
     <div>
         <label for="salary">Salary</label>
-        <input type="text" name="salary" />
+        <input id="salary" type="text" name="salary" placeholder="12.34"/>
     </div>
     <div>
-        <input type="submit" value="Create Teacher" />
+        <input id="submit-button" type="submit" value="Create Teacher" />
     </div>
 </form>

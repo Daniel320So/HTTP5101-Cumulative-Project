@@ -60,9 +60,10 @@ namespace SchoolProject.Controllers
             DateTime hireDate = DateTime.Now;
             float _salary = float.Parse(salary);
             TeacherDataController controller = new TeacherDataController();
-            Teacher teacher = new Teacher(-1, teacherLname, teacherFname, employeeNumber, hireDate, _salary);
+            Teacher teacher = new Teacher(-1, teacherLname, teacherFname, employeeNumber, hireDate, _salary); // -1 is used as default teacher id
             controller.AddTeacher(teacher);
-            return RedirectToAction("List");
+            int id = controller.getLatestTeacherId();
+            return RedirectToAction("Show", new { id = id});
         }
     }
 }

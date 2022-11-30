@@ -41,3 +41,7 @@ button {
     background-color: #dd1111;
     color: white;
 }
+
+.error {
+    background-color: #dd1111;
+}

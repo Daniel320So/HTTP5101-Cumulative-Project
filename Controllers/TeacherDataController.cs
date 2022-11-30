@@ -107,6 +107,23 @@ namespace SchoolProject.Controllers
             return newTeacher;
         }
 
+        public int getLatestTeacherId()
+        {
+            MySqlConnection Conn = School.AccessDatabase();
+            Conn.Open();
+            MySqlCommand cmd = Conn.CreateCommand();
+            string query = "SELECT Max(teacherId) as latestId FROM teachers";
+            cmd.CommandText = query;
+            cmd.Prepare();
+            MySqlDataReader ResultSet = cmd.ExecuteReader();
+            int id = -1;
+            while (ResultSet.Read())
+            {
+                id = int.Parse(ResultSet["latestId"].ToString());
+            }
+            return id;
+        }
+
         /// <summary>
         ///     Delete a teacher in the db based on the teacher id
         /// </summary>
