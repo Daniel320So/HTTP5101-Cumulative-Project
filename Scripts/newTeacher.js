@@ -11,9 +11,9 @@ const loadPage = () => {
         $("#salary").removeClass("error")
 
         //Input valitdations
-        if ($("#teacherFname").val() == "" || null || undefined) {
+        if ($("#teacherFname").val() == "" || $("#teacherFname").val() == null || $("#teacherFname").val() == undefined) {
             $("#teacherFname").addClass("error")
-        } else if ($("#teacherLname").val() == "" || null || undefined) {
+        } else if ($("#teacherLname").val() == "" || $("#teacherLname").val() == null || $("#teacherLname").val() == undefined) {
             $("#teacherLname").addClass("error")
         } else if (!$("#employeeNumber").val().match(/^[A-Z]\w{3}$/)) { //all employee numbers must be start from a upper case letter with 3 digits
             $("#employeeNumber").addClass("error")

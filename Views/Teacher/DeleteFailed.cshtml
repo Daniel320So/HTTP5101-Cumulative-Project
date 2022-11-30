@@ -1,0 +1,27 @@
+﻿@model SchoolProject.Models.Teacher
+@{
+    ViewBag.Title = "DeleteFailed";
+}
+
+
+<div id="containershow">
+
+    <nav>
+        <a class="navlink" href="/Teacher/Show/@Model.teacherId">Back</a>
+    </nav>
+
+    <h2>@Model.teacherFname @Model.teacherLname cannot be deleted from the database</h2>
+    <p> Reason: The below courses are linked to @Model.teacherFname</p>
+
+    <div id="containerlist">
+        <h3>List of Courses</h3>
+        @foreach (var classes in @Model.classes)
+        {
+            <div class="listitem row">
+                <div class="col-md-12"><a href="/Class/Show/@classes.classId">@classes.className</a></div>
+            </div>
+        }
+    </div>
+</div>
+
+

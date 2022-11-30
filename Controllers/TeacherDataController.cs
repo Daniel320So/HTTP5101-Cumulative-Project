@@ -133,6 +133,13 @@ namespace SchoolProject.Controllers
         [HttpPost]
         public void DeleteTeacher(int id)
         {
+            //Check Classes that a teacher teach
+            ClassDataController controller = new ClassDataController();
+            List < Class > classes = controller.FindClassByTeacherId(id);
+            if (classes.Count != 0)
+            {
+                throw new Exception("Teacher cannot be deleted as there are classes linked to the teacher.");
+            }
             MySqlConnection Conn = School.AccessDatabase();
             Conn.Open();
             MySqlCommand cmd = Conn.CreateCommand();
@@ -148,10 +155,9 @@ namespace SchoolProject.Controllers
         }
 
         /// <summary>
-        ///     Delete a teacher in the db based on the teacher id
+        ///     Add a teacher in the db 
         /// </summary>
-        /// <param name="id"></param>
-        /// <example> POST : /api/AuthorData/DeleteTeacher/3 </example>
+        /// <param name="newTeacher"></param>
 
         [HttpPost]
         public void AddTeacher( [FromBody]Teacher newTeacher)

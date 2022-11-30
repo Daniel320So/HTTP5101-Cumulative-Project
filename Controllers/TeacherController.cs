@@ -1,4 +1,5 @@
 ﻿using System;
+using System.CodeDom;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
@@ -40,11 +41,28 @@ namespace SchoolProject.Controllers
             return View(teacher);
         }
 
+        //GET : /Teacher/DeleteFailed/${id}
+        public ActionResult DeleteFailed(int id)
+        {
+            TeacherDataController controller = new TeacherDataController();
+            Teacher teacher = controller.FindTeacher(id);
+            return View(teacher);
+        }
+
         //POST : /Teacher/Delete/{id}
         public ActionResult Delete(int id)
         {
             TeacherDataController controller = new TeacherDataController();
-            controller.DeleteTeacher(id);
+            try
+            {
+                controller.DeleteTeacher(id);
+            }
+            catch (Exception e)
+            {
+                Debug.WriteLine(e.ToString());
+                return RedirectToAction("DeleteFailed", new { id = id });
+            }
+
             return RedirectToAction("List");
         }
 
@@ -55,15 +73,41 @@ namespace SchoolProject.Controllers
         }
 
         //POST : /Teacher/Create
-        public ActionResult Create(string teacherLname, string teacherFname, string employeeNumber, string salary)
+        public ActionResult Create(string teacherFname, string teacherLname, string employeeNumber, string salary)
         {
+            // Server side data validation
+            try
+            {
+                if (teacherFname == "" || teacherFname == null)
+                {
+                    throw new Exception("Teacher First Name Is Empty");
+                }
+                else if (teacherLname == "" || teacherLname == null)
+                {
+                    throw new Exception("Teacher Last Name Is Empty");
+                }
+                else if (employeeNumber == "" || employeeNumber == null)
+                {
+                    throw new Exception("Employee Number Is Empty");
+                }
+                else if (salary == "" || salary == null)
+                {
+                    throw new Exception("Salary Is Empty");
+                }
+            } catch (Exception e)
+            {
+                Debug.WriteLine(e.ToString());
+                return RedirectToAction("List");
+            }
+
+            
             DateTime hireDate = DateTime.Now;
             float _salary = float.Parse(salary);
             TeacherDataController controller = new TeacherDataController();
-            Teacher teacher = new Teacher(-1, teacherLname, teacherFname, employeeNumber, hireDate, _salary); // -1 is used as default teacher id
+            Teacher teacher = new Teacher(-1, teacherFname, teacherLname, employeeNumber, hireDate, _salary); // -1 is used as default teacher id
             controller.AddTeacher(teacher);
             int id = controller.getLatestTeacherId();
-            return RedirectToAction("Show", new { id = id});
+            return RedirectToAction("Show", new { id = id });
         }
     }
 }
