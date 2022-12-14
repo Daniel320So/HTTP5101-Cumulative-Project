@@ -142,7 +142,6 @@ namespace SchoolProject.Controllers
         [HttpPost]
         public ActionResult Update(int id, string teacherFname, string teacherLname, string employeeNumber, string hireDate, string salary)
         {
-            Debug.WriteLine(id);
             // Server side data validation
             try
             {

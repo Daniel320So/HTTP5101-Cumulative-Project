@@ -1,6 +1,8 @@
 ﻿@model SchoolProject.Models.Teacher
 @{
     ViewBag.Title = "Update";
+    <script src="~/Scripts/jquery-3.4.1.min.js"></script>
+    <script src="~/Scripts/updateTeacher.js"></script>
 }
 
 <nav>
@@ -24,11 +26,11 @@
     </div>
     <div>
         <label for="hireDate">Hire Date</label>
-        <input id="hireDate" type="text" name="hireDate" value="@Model.hireDate"/>
+        <input id="hireDate" type="text" name="hireDate" value="@Model.hireDate" />
     </div>
     <div>
         <label for="salary">Salary</label>
-        <input id="salary" type="text" name="salary" value="@Model.salary"/>
+        <input id="salary" type="text" name="salary" value="@Model.salary" />
     </div>
     <div>
         <input id="submit-button" type="submit" value="Update Teacher" />
