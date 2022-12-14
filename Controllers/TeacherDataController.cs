@@ -155,7 +155,7 @@ namespace SchoolProject.Controllers
         }
 
         /// <summary>
-        ///     Add a teacher in the db 
+        ///     Add a teacher in the data base 
         /// </summary>
         /// <param name="newTeacher"></param>
 
@@ -177,6 +177,34 @@ namespace SchoolProject.Controllers
 
             cmd.ExecuteNonQuery();
 
+            Conn.Close();
+        }
+
+        /// <summary>
+        ///     Update a teacher in the data base 
+        /// </summary>
+        /// <param name="selectedTeacher"></param>
+
+        [HttpPost]
+        public void UpdateTeacher([FromBody] Teacher selectedTeacher)
+        {
+            MySqlConnection Conn = School.AccessDatabase();
+            Conn.Open();
+            MySqlCommand cmd = Conn.CreateCommand();
+
+            string query = "Update teachers set teacherfname = @teacherFname, teacherlname = @teacherLname, employeenumber = @employeeNumber, hiredate = @hireDate, salary =  @salary " +
+                "where teacherid = @teacherId;";
+
+            cmd.CommandText = query;
+            cmd.Parameters.AddWithValue("@teacherFname", selectedTeacher.teacherFname);
+            cmd.Parameters.AddWithValue("@teacherLname", selectedTeacher.teacherLname);
+            cmd.Parameters.AddWithValue("@employeeNumber", selectedTeacher.employeeNumber);
+            cmd.Parameters.AddWithValue("@hireDate", selectedTeacher.hireDate);
+            cmd.Parameters.AddWithValue("@salary", selectedTeacher.salary);
+            cmd.Parameters.AddWithValue("@teacherId", selectedTeacher.teacherId);
+
+            cmd.Prepare();
+            cmd.ExecuteNonQuery();
             Conn.Close();
         }
     }
