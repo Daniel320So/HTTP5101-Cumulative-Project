@@ -128,7 +128,7 @@ namespace SchoolProject.Controllers
         ///     Delete a teacher in the db based on the teacher id
         /// </summary>
         /// <param name="id"></param>
-        /// <example> POST : /api/AuthorData/DeleteTeacher/3 </example>
+        /// <example> POST : /api/TeacherData/DeleteTeacher/3 </example>
 
         [HttpPost]
         public void DeleteTeacher(int id)

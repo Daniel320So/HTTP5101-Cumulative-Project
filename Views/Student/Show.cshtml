@@ -14,8 +14,13 @@
         <h3>List of Courses</h3>
         @foreach (var classObj in @Model.classes)
         {
-            <div class="listitem row">
+            <div class="listitem row classitem">
                 <div class="col-md-12"><a href="/Class/Show/@classObj.classId">@classObj.className</a></div>
+                <form method="POST" action="/Student/DeleteClassFromStudent/@Model.studentId,@classObj.classId">
+                    <div>
+                        <input id="submit-button" type="submit" value="Remove" />
+                    </div>
+                </form>
             </div>
         }
     </div>

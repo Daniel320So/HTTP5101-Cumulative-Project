@@ -143,5 +143,31 @@ namespace SchoolProject.Controllers
 
             return newStudent;
         }
+
+        /// <summary>
+        ///     Delete a class from the student
+        /// </summary>
+        /// <param name="studentId"> Student Id </param>
+        /// <param name="classId"> Class Id </param>
+        /// <example> POST : /api/StudentData/DeleteClassFromStudent/3/4 </example>
+
+        [HttpPost]
+        public void DeleteClassFromStudent(int studentId, int classId)
+        {
+
+            MySqlConnection Conn = School.AccessDatabase();
+            Conn.Open();
+            MySqlCommand cmd = Conn.CreateCommand();
+
+            string query = "Delete from studentsxclasses where studentid = @studentId and classid = @classId";
+            cmd.CommandText = query;
+            cmd.Parameters.AddWithValue("@studentId", studentId);
+            cmd.Parameters.AddWithValue("@classId", classId);
+            cmd.Prepare();
+
+            cmd.ExecuteNonQuery();
+
+            Conn.Close();
+        }
     }
 }

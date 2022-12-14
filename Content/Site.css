@@ -46,3 +46,9 @@ button {
 .error {
     background-color: #dd1111;
 }
+
+.classitem {
+    display: flex;
+    flex-flow: row nowrap;
+    gap: 20px;
+}
