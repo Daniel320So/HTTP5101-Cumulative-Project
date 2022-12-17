@@ -15,6 +15,18 @@
     <p> Enroll Date: @Model.enrollDate</p>
 
     <div id="containerlist">
+
+        <h3> Register New Course</h3>
+        <form class="add-class-container" method="POST" action="/Student/AddClassToStudent/@Model.studentId">
+            <label for="selected-course">Select Course</label>
+            <select name="selectedCourse" id="selectedCourse">
+                @foreach (var classObjAvailable in @Model.availableClasses)
+                {
+                    <option value="@classObjAvailable.classId">@classObjAvailable.className</option>
+                }
+            </select>
+            <input id="add-button" type="submit" value="Register" />
+        </form>
         <h3>List of Courses</h3>
         @foreach (var classObj in @Model.classes)
         {
@@ -27,5 +39,8 @@
                 </form>
             </div>
         }
+
+
+
     </div>
 </div>

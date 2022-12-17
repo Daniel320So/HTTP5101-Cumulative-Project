@@ -76,9 +76,19 @@ namespace SchoolProject.Controllers
                 newStudent = ConvertDataToStudentObject(ResultSet);
 
                 //Add classes data to the student
-                ClassDataController classController = new ClassDataController();
-                newStudent.classes = classController.FindClassesBysStudentId(id);
-                Debug.WriteLine(newStudent);
+                ClassDataController classDataController = new ClassDataController();
+                newStudent.classes = classDataController.FindClassesByStudentId(id);
+
+                //Add available classes data to the student
+                newStudent.availableClasses = new List<Class>();
+                List<Class> allClasses = new List<Class>(classDataController.ListClass(""));
+                for (int i=0; i < allClasses.Count; i++)
+                {
+                    if (!newStudent.classes.Exists(v =>  v.classId == allClasses[i].classId))
+                    {
+                        newStudent.availableClasses.Add(allClasses[i]);
+                    }
+                }
             }
 
             Conn.Close();
@@ -143,6 +153,33 @@ namespace SchoolProject.Controllers
 
             return newStudent;
         }
+
+        /// <summary>
+        ///     Add a class to the student
+        /// </summary>
+        /// <param name="studentId"> Student Id </param>
+        /// <param name="classId"> Class Id </param>
+        /// <example> POST : /api/StudentData/AddClassToStudent/3/4 </example>
+
+        [HttpPost]
+        public void AddClassToStudent(int studentId, int classId)
+        {
+
+            MySqlConnection Conn = School.AccessDatabase();
+            Conn.Open();
+            MySqlCommand cmd = Conn.CreateCommand();
+
+            string query = "Insert Into studentsxclasses (studentid, classid) values (@studentId, @classId)";
+            cmd.CommandText = query;
+            cmd.Parameters.AddWithValue("@studentId", studentId);
+            cmd.Parameters.AddWithValue("@classId", classId);
+            cmd.Prepare();
+
+            cmd.ExecuteNonQuery();
+
+            Conn.Close();
+        }
+
 
         /// <summary>
         ///     Delete a class from the student

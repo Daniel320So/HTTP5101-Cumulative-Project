@@ -122,10 +122,10 @@ namespace SchoolProject.Controllers
         /// <summary> Finds a list of class in the system given an studentId </summary>
         /// <param name="id">The studentId foreign key</param>
         /// <returns>A list of class object</returns>
-        /// <example>GET api/ClassData/FindClassesBysStudentId/${id}</example>
+        /// <example>GET api/ClassData/FindClassesByStudentId/${id}</example>
 
         [HttpGet]
-        public List<Class> FindClassesBysStudentId(int id)
+        public List<Class> FindClassesByStudentId(int id)
         {
             MySqlConnection Conn = School.AccessDatabase();
             Conn.Open();

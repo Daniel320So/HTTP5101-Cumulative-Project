@@ -188,6 +188,8 @@ namespace SchoolProject.Controllers
         [HttpPost]
         public void UpdateTeacher([FromBody] Teacher selectedTeacher)
         {
+
+
             MySqlConnection Conn = School.AccessDatabase();
             Conn.Open();
             MySqlCommand cmd = Conn.CreateCommand();

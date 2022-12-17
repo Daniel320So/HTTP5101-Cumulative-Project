@@ -27,10 +27,28 @@ namespace SchoolProject.Controllers
         //GET : /Student/Show/${id}
         public ActionResult Show(int id)
         {
-            StudentDataController controller = new StudentDataController();
-            Student student = controller.FindStudent(id);
+            StudentDataController studentDataController = new StudentDataController();
+            Student student = studentDataController.FindStudent(id);
+
             return View(student);
         }
+
+        //POST : /Student/AddClassToStudent/${studentId},${classId}
+        /// <summary>
+        ///     Add a class to the student
+        /// </summary>
+        /// <param name="id"> A string of two id separated by ","  The first one is student id and the second one is class id</param>
+        /// <returns> A Dynamic Webpage that provide the information of the student</returns>
+        /// 
+
+        [HttpPost]
+        public ActionResult AddClassToStudent(int id, int selectedCourse)
+        {
+            StudentDataController controller = new StudentDataController();
+            controller.AddClassToStudent(id, selectedCourse);
+            return RedirectToAction("Show", new { id = id });
+        }
+
 
         //POST : /Student/DeleteClassFromStudent/${studentId},${classId}
         /// <summary>
